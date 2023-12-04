@@ -1,0 +1,6 @@
+*.ipynb_checkpoints*
+data/alignment
+data/eval
+data/instruct
+data/pmc_articles
+data/llava_med_image_urls.jsonl
