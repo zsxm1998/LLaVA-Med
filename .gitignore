@@ -4,3 +4,8 @@ data/eval
 data/instruct
 data/pmc_articles
 data/llava_med_image_urls.jsonl
+weights
+*__pycache__*
+checkpoints/
+*.log
+*.pyc

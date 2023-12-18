@@ -84,6 +84,15 @@ def load_model(model_path, num_gpus):
         if mm_use_im_start_end:
             vision_config.im_start_token, vision_config.im_end_token = tokenizer.convert_tokens_to_ids([DEFAULT_IM_START_TOKEN, DEFAULT_IM_END_TOKEN])
 
+    # add by zsxm
+    if getattr(model.config, "mm_projector_checkpoint", False):
+        with torch.no_grad():
+            mm_projector_weights = torch.load(getattr(model.config, "mm_projector_checkpoint"), map_location='cpu')
+            model.model.embed_tokens.weight.copy_(mm_projector_weights['model.embed_tokens.weight'])
+            model.model.mm_projector.weight.copy_(mm_projector_weights['model.mm_projector.weight'])
+            model.model.mm_projector.bias.copy_(mm_projector_weights['model.mm_projector.bias'])
+    # end add by zsxm
+
     if num_gpus == 1:
         model.cuda()
 
